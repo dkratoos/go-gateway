@@ -83,7 +83,7 @@ func (r *AccountRepository) UpdateBalance(account *domain.Account) error {
 		return err
 	}
 
-	_, err = tx.Exec("UPDATE accounts SET balance = $1, updated_at = $2 WHERE id = $3", currentBalance+account.Balance, time.Now(), account.ID)
+	_, err = tx.Exec("UPDATE accounts SET balance = $1, updated_at = $2 WHERE id = $3", account.Balance, time.Now(), account.ID)
 	if err != nil {
 		return err
 	}

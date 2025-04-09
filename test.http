@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:8080
 
 @apiKey = {{createAccount.response.body.api_key}}
-
+@accountId = {{createAccount.response.body.id}}
 
 ### Create Account
 # @name createAccount
@@ -17,7 +17,30 @@ Content-Type: application/json
 GET {{baseUrl}}/accounts
 X-API-Key: {{apiKey}}
 
-### Update Balance
-PUT {{baseUrl}}/accounts/{{createAccount.response.body.id}}
-Authorization: Bearer {{apiKey}}
 
+@invoiceId = {{createInvoice.response.body.id}}
+
+### Create Invoice
+# @name createInvoice
+POST {{baseUrl}}/invoices
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+    "amount": 100,
+    "description": "Invoice for John Doe",
+    "payment_method": "credit_card",
+    "credit_card": "1234567890123456",
+    "cvv": "123",
+    "expiry_month": 12,
+    "expiry_year": 2024,
+    "holder_name": "John Doe"
+}
+
+### Get Invoice
+GET {{baseUrl}}/invoices/{{invoiceId}}
+X-API-Key: {{apiKey}}
+
+### Get Invoices
+GET {{baseUrl}}/invoices/account/{{accountId}}
+X-API-Key: {{apiKey}}

@@ -51,27 +51,3 @@ func (h *AccountHandler) GetAccount(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(account)
 }
-
-func (h *AccountHandler) UpdateBalance(w http.ResponseWriter, r *http.Request) {
-	apiKey := r.Header.Get("X-API-Key")
-	if apiKey == "" {
-		http.Error(w, "X-API-Key header is required", http.StatusBadRequest)
-		return
-	}
-
-	var input dto.UpdateBalanceRequest
-	err := json.NewDecoder(r.Body).Decode(&input)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	account, err := h.accountService.UpdateBalance(apiKey, input.Balance)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(account)
-}

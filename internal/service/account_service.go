@@ -14,7 +14,7 @@ func NewAccountService(accountRepository domain.AccountRepository) *AccountServi
 }
 
 func (s *AccountService) Create(input dto.CreateAccountRequest) (*dto.CreateAccountResponse, error) {
-	account := dto.ToDomain(input)
+	account := dto.AccountToDomain(input)
 
 	existingAccount, err := s.accountRepository.GetByAPIKey(account.APIKey)
 	if err != nil && err != domain.ErrAccountNotFound {
@@ -30,7 +30,7 @@ func (s *AccountService) Create(input dto.CreateAccountRequest) (*dto.CreateAcco
 		return nil, err
 	}
 
-	output := dto.FromDomain(account)
+	output := dto.AccountFromDomain(account)
 	return &output, nil
 }
 
@@ -40,7 +40,7 @@ func (s *AccountService) GetByAPIKey(apiKey string) (*dto.CreateAccountResponse,
 		return nil, err
 	}
 
-	output := dto.FromDomain(account)
+	output := dto.AccountFromDomain(account)
 	return &output, nil
 }
 
@@ -50,7 +50,7 @@ func (s *AccountService) GetByID(id string) (*dto.CreateAccountResponse, error) 
 		return nil, err
 	}
 
-	output := dto.FromDomain(account)
+	output := dto.AccountFromDomain(account)
 	return &output, nil
 }
 
@@ -67,6 +67,6 @@ func (s *AccountService) UpdateBalance(apiKey string, balance float64) (*dto.Cre
 		return nil, err
 	}
 
-	output := dto.FromDomain(account)
+	output := dto.AccountFromDomain(account)
 	return &output, nil
 }

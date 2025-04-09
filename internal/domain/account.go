@@ -50,6 +50,7 @@ func (a *Account) AddBalance(amount float64) {
 	defer a.mu.Unlock()
 
 	a.Balance += amount
+
 	a.UpdatedAt = time.Now()
 }
 

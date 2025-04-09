@@ -21,11 +21,11 @@ type CreateAccountResponse struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func ToDomain(input CreateAccountRequest) *domain.Account {
+func AccountToDomain(input CreateAccountRequest) *domain.Account {
 	return domain.NewAccount(input.Name, input.Email)
 }
 
-func FromDomain(account *domain.Account) CreateAccountResponse {
+func AccountFromDomain(account *domain.Account) CreateAccountResponse {
 	return CreateAccountResponse{
 		ID:        account.ID,
 		Name:      account.Name,
